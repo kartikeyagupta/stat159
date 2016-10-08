@@ -41,7 +41,11 @@ Going deeper into this analysis, we focus our direction to the model and its qua
 
 First we have the coefficients from this fitted regression given as below along with their std. errors and t-statistics.
 
-## table ##
+```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
+library(xtable)
+load(file = "./../data/regression.RData")
+xtable(reg)
+```
 
 From the intercept coefficient, we can see that if there was a $0 ad budget then we would have 7.0325*1000 ~ 7032 units of sale. This represents the constant coefficient.
 
@@ -51,7 +55,13 @@ From this, we know that allocation to the TV budget is actually efficient at inc
 
 Finally, to test whether this model is actually good we measure a few more variable. Please look at the table below.
 
-## table ##
+```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
+Quantity = c("Residual Standard Error","R2","F-Statistic")
+Value = c(as.numeric(sqrt(sum(as.vector(summary(reg)$residuals)^2)/(length(summary(reg)$residuals)-2))), as.numeric(summary(reg)$r.squared), as.numeric((summary(reg)$fstatistic)[1]))
+valuetable = data.frame(Quantity, Value)
+
+print(xtable(valuetable),row.names = FALSE)
+```
 
 The first term "Residual Standard Error" measure the lack of fit of the model. This means that on average how much would the variance be from the given estimates. Here the value of 3.26 indicates that given the tv advertising the sales could be off by 3,2600 units on average. This error would be lower if the model had less variance which could make our estimate prediction better.
 
@@ -62,25 +72,3 @@ Finally, the F-statistic is a measure of the statistical significance of the mod
 ### Conclusion ###
  
 Through this paper, we learn that TV ads play a significant role in increasing poduct sales. We also learn about the approximate quantitative difference tv ads made on sales for this given data. The results are statistically significant and 61.2% of the variation can be explained by our linear model. This analysis can be helpful for anyone who is trying to understand the impact of tv ads dollars and how to allocate budgets accordingly. Finally, this is precisely why we see ads on tv. If it never increased sales then there would be no point of showing the advertisements. 
-
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r echo=FALSE}
-#xtable(reg)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
