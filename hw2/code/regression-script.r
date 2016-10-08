@@ -1,6 +1,7 @@
 library("xtable")
 
-ad = read.csv("./data/Advertising.csv", row.names = 1)
+args = commandArgs(trailingOnly = TRUE)
+ad = read.csv(args[1], row.names = 1) #"./data/Advertising.csv", row.names = 1)
 
 reg = lm(Sales ~ TV, ad)
 summary(reg)
@@ -25,3 +26,5 @@ regtable = xtable(reg)
 valuetable = xtable(valuetable)
 
 save(reg, file= "./data/regression.RData")
+
+

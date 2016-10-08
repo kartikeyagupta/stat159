@@ -1,5 +1,6 @@
 
-ad = read.csv("./data/Advertising.csv", row.names = 1)
+args = commandArgs(trailingOnly = TRUE)
+ad = read.csv(args[1], row.names = 1)
 
 sink("./data/eda-output.txt")
 print("Summary Statistics of TV")
@@ -15,7 +16,6 @@ dev.off()
 pdf("./images/histogram-tv.pdf")
 hist(ad$TV, xlab = "TV", main = "Histogram of Ad TV")
 dev.off()
-
 
 png("./images/histogram-sales.png")
 hist(ad$Sales, xlab = "Sales", main = "Histogram of Ad Sales ")
