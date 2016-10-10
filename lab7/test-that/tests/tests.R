@@ -84,3 +84,8 @@ test_that("missing values for character vectors", {
   expect_type(missing_values(x), 'double')
 }) 
 
+# ____________________________________________________________________ #
+
+
+
+
