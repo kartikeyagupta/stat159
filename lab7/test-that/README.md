@@ -1,0 +1,1 @@
+All required porblems are completed except Extra Challenge. The test cases currently are modified to pass everything. To check certain failures the parameters would have to be chenged for whatever you want to fail. 
