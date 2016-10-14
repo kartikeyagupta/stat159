@@ -1,20 +1,41 @@
 library("xtable")
 
-args = commandArgs(trailingOnly = TRUE)
-ad = read.csv(args[1], row.names = 1) #"./data/Advertising.csv", row.names = 1)
+#args = commandArgs(trailingOnly = TRUE)
+#ad = read.csv(args[1], row.names = 1) 
 
-reg = lm(Sales ~ TV, ad)
+ad = read.csv("./data/Advertising.csv", row.names = 1)
+
+reg = lm(Sales ~ TV + Radio + Newspaper, ad)
 summary(reg)
 
 png("./images/scatterplot-tv-sales.png")
 plot(ad$TV, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )
-abline(reg)
+abline(lm(Sales~TV, ad))
 dev.off()
 
-pdf("./images/scatterplot-tv-sales.pdf")
-plot(ad$TV, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )
-abline(reg)
+png("./images/scatterplot-radio-sales.png")
+plot(ad$Radio, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )
+abline(lm(Sales~Radio, ad))
 dev.off()
+
+png("./images/scatterplot-newspaper-sales.png")
+plot(ad$Newspaper, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )
+abline(lm(Sales~Newspaper, ad))
+dev.off()
+
+
+png("./images/residual-plot.png")
+plot(reg, which = c(1))
+dev.off()
+
+png("./images/scale-location-plot.png")
+plot(reg, which = c(3))
+dev.off()
+
+png("./images/normal-qq-plot.png")
+plot(reg, which = c(2))
+dev.off()
+
 
 #stargazer(reg, type = "text", out = "./data/Tv~Sales-Reg.txt")
 
