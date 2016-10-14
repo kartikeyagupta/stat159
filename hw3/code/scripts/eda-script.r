@@ -1,6 +1,6 @@
 library('corrplot')
 library('lattice')
-require(ggplot2)
+library('ggplot2')
 
 #args = commandArgs(trailingOnly = TRUE)
 #ad = read.csv(args[1], row.names = 1)
