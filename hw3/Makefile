@@ -1,18 +1,30 @@
+REPrmd = report/report.rmd
+REPpdf = report/report.pdf
+REGdata = data/regression.RData
+IMAGES = images/*.png
+DATA = data/Advertising.csv
+REGscript = code/regression-script.R
+
+
+
 .phony: all data clean
 
-all: report/report.pdf data/eda-output.txt data/regression.RData
+all: $(REPpdf) data/eda-output.txt $(REGdata)
 
-report/report.pdf: report/report.rmd data/regression.RData images/scatterplot-tv-sales.png
-	Rscript -e "library(rmarkdown);render('report/report.rmd')"
+$(REPpdf): $(REPrmd) $(REGdata) $(IMAGES)
+	Rscript -e "library(rmarkdown);render('$(REPrmd)')"
 
-data/regression.RData: code/regression-script.R data/Advertising.csv
-	Rscript code/regression-script.R data/Advertising.csv
+$(REGdata): $(REGscript) $(DATA)
+	Rscript $(REGscript) $(DATA)
 
-data/eda-output.txt: code/eda-script.R data/Advertising.csv
-	Rscript code/eda-script.r data/Advertising.csv
+data/eda-output.txt: code/eda-script.R $(DATA)
+	Rscript code/eda-script.r $(DATA)
 
 data:
-	curl http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv > data/Advertising.csv
+	curl http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv > $(DATA)
 
+tests:
+	Rscript code/test-that.r
+	
 clean: 
 	rm report/report.pdf

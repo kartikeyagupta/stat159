@@ -8,7 +8,7 @@ output: pdf_document
 This is Homework 3 for Stat 159 - RCDSC. For this homework, we are reproducing the main results displayed in Section 3.1, Chapter 3 of the book An Introduction to Statistical Learning.  
 
 ## Introduction ##
-Through this report, we try to understand the relationship between Sales, TV, News and Radio advertisements, and come up with a simple model that can be used to understand such a relationship. This would help us determine whether the above mentioned media ads are actually successful at increasing sales or not and if yes, then what is their impact. 
+Through this report, we try to understand the relationship between Sales and TV, News, Radio advertisements, and come up with a simple model that can be used to understand such a relationship. This would help us determine whether the above mentioned media ads are actually successful at increasing sales or not and if yes, then what is their impact. 
 
 ## Data ##
 The data set we are working with is called the "Advertising"" data set. It consists of the Sales of a particular product in 200 different markets, along with advertising budgets for the product in each of those markets for three different media: TV, Radio, and Newspaper.
@@ -17,16 +17,16 @@ Sales are in thousands of units.
 Advertising budgets for TV, Radio and Newspaper are measured in thousands of dollars.  
 
 ## Methodology ##
-In this paper, we will be using a Multiple Linear Regression model which is used to find a quantitative relationship between the independent variables TV, Newspaper, Radio and the dependent variable Sales. Here the is the equation:
+In this paper, we will be using a Multiple Linear Regression model which is used to find a quantitative relationship between the independent variables TV, Newspaper, Radio and the dependent variable Sales. Here is the equation:
 $$
-Sales = \beta_0 + \beta1 TV + \beta2 Radio + \beta3 Newspaper + \epsilon
+Sales = \beta_0 + \beta_1 TV + \beta_2 Radio + \beta_3 Newspaper + \epsilon
 $$
-Here the $\beta_0$ is the constant term and the $\beta_1$ is the coefficient of TV Ads.
+Here the $\beta_0$ is the constant term. $\beta_1$ is the coefficient of TV Ads. $\beta_2$ is the coefficient of Radio Ads. And $\beta_3$ is the coefficient of Newspaper Ads. $\epsilon$ is the error term.
 Note we fit the regression by using the Ordinary Least Squares Estimator method.
 
 ## Results ##
 
-To be able to visualize the data we create the scatterplot given below. through this scatterplot, we can see that there are various values of of Sale-vs-Tv and an upward sloping line. This line indicates a positive linear relationship between Tv ads and Sales. Further, we notice that the graph is heteroscadastic which means that the variance is changing given the slope. Initial sales have a small variance as compared to the large variance towards the right end of the graph where TV ad budget is far greater. This could signify a rather loose casuality when the budget increases alot. Note that the line going through the plot is essentailly the fitted line of the regression.
+To be able to visualize the data we create the scatterplots given below. Through these scatterplots, we can see that there are various values of Sale-vs-Tv and an upward sloping line. We can observe a similar relations betwen Sales-vs-Radio/Newspaper though the dots are more scattered and the correlation is positive but lower. The lines on the plots indicate a positive linear relationship between Tv, Newspaper, Radio ads and Sales. Further, we notice that the graphs are heteroscadastic which means that the variance is changing given the slope. Initial sales have a small variance as compared to the large variance towards the right end of the graph where TV and Radio ad budgets are far greater. However, for newspaper there isnt alot of data for high budgets maybe because its cheaper. However, the effectiveness for the same budget can vary alot - as seen on the left half of the plot. In general, for Tv and Radio, this could signify a rather loose casuality when the budget increases alot. But for newspaper, we see little correlation between budget and sales. Note that the lines going through the plots are essentailly the fitted lines of the regression.
 
 \begin{center}
 \includegraphics[width=0.33\textwidth]{./../images/scatterplot-tv-sales.png}%
@@ -34,7 +34,7 @@ To be able to visualize the data we create the scatterplot given below. through 
 \includegraphics[width=0.33\textwidth]{./../images/scatterplot-newspaper-sales.png}
 \end{center}
 
-Going deeper into this analysis, we focus our direction to the model and its quantitative properties. 
+Going deeper into this analysis, we focus our direction to the single linear regression model and its quantitative properties. 
 
 First we have the coefficients from this fitted regression given as below along with their std. errors and t-statistics.
 
@@ -47,21 +47,33 @@ simple = read.csv("./../data/Advertising.csv")
 ```
 
 ```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
-print(xtable(lm(Sales~TV, simple),caption = "Regression of Sales on TV"), comment = FALSE)
-
-print(xtable(lm(Sales~Radio, simple),caption = "Regression of Sales on Radio"), comment = FALSE)
-
-print(xtable(lm(Sales~Newspaper, simple),caption = "Regression of Sales on Newspaper"), comment = FALSE)
+tv = lm(Sales~TV, simple)
+print(xtable(tv,caption = "Regression of Sales on TV"), comment = FALSE)
+radio = lm(Sales~Radio, simple)
+print(xtable(radio,caption = "Regression of Sales on Radio"), comment = FALSE)
+news = lm(Sales~Newspaper, simple)
+print(xtable(news,caption = "Regression of Sales on Newspaper"), comment = FALSE)
 ```
 
 ```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
 print(xtable(reg,caption = "Regression Output"), comment = FALSE)
 ```
-From the intercept coefficient, we can see that if there was a $0 ad budget then we would have 7.0325*1000 ~ 7032 units of sale. This represents the constant coefficient.
 
-Moving on to the TV coefficient, we can understand that for every unit increase in TV budget the Sales would be impacted by +0.0475 units. Which means that if we increase the add budget by $1000 then we would ideally see an increase in the sales by 47.5 units. This outlines the models ability to find a relationship between TV ads and actual Sales. Also, notice that the t-stat on the TV coefficient is 17.67 which indicates that this result is highly statistically significant.
+From the above:  
 
-From this, we know that allocation to the TV budget is actually efficient at increasing sales of the product. The model also helps in the prediction of the sales given a certain TV budget. This could help make future decisions about how much to allocate for marketing campaigns focused on TV.
+- TV - We can see that if there was a $0 ad budget then we would have `r (tv$coefficients)[1]*1000` units of sale. This represents the constant coefficient. For every $1000 increase in TV budget, there would be an additional `r (tv$coefficients)[2]*1000` units of sale. Also, notice that the t-stat on the TV coefficient is `r (summary(tv)$coefficients)[6]` which indicates that this result is highly statistically significant.  
+
+- Radio - We can see that if there was a $0 ad budget then we would have `r (radio$coefficients)[1]*1000` units of sale. This represents the constant coefficient. For every $1000 increase in Radio budget, there would be an additional `r (radio$coefficients)[2]*1000` units of sale. Also, notice that the t-stat on the Radio coefficient is `r (summary(radio)$coefficients)[6]` which indicates that this result is highly statistically significant.  
+
+- Newspaper - We can see that if there was a $0 ad budget then we would have `r news$coefficients[1]`  units of sale. This represents the constant coefficient. For every $1000 increase in Newspaper budget, there would be an additional `r (news$coefficients)[2]*1000` units of sale. Also, notice that the t-stat on the Newspaper coefficient is `r (summary(news)$coefficients)[6]` which indicates that this result is not statistically significant thus we cannot conclude that there is a strong relationship.
+
+From this, we know that allocation to the RAdio budget is actually most efficient at increasing sales of the product, while TV budget is still quite good. There is a rather insignificant difference made with newspaper ads and they should probably not be continued. This model also helps in the prediction of the sales given a certain TV+Radio+News budget. This could help make future decisions about how much to allocate for marketing campaigns.
+
+From this table of Correlations,
+```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
+print(xtable(correlation, caption = "Correlation Table"),row.names = FALSE, comment = FALSE)
+```
+we can see that TV-Sales and Sales-Radio have high positive correlations while the Sales-Newspaper term has a low but positive relationship.  
 
 Finally, to test whether this model is actually good we measure a few more variable. Please look at the table below.
 
@@ -73,18 +85,29 @@ valuetable = data.frame(Quantity, Value)
 print(xtable(valuetable, caption = "Measure of Fit Statistics"),row.names = FALSE, comment = FALSE)
 ```
 
+The first term "Residual Standard Error" measures the lack of fit of the model. This means that on average how much would the variance be from the given estimates. Here the value of `r residual_std_error(reg)` indicates that given the tv advertising the sales could be off by `r residual_std_error(reg)*1000` units on average. This error would be lower if the model had less variance which could make our estimate prediction better.
 
-```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
-print(xtable(correlation, caption = "Correlation Table"),row.names = FALSE, comment = FALSE)
-```
+The second term "$R^2$" is another measure of fit statistic. It describes the model in the form of proportions of variance in data explained by the model. Here `r r_squared(reg)*100` means that `r r_squared(reg)*100`% of the variance can be explained by this model.
 
-
-The first term "Residual Standard Error" measure the lack of fit of the model. This means that on average how much would the variance be from the given estimates. Here the value of 3.26 indicates that given the tv advertising the sales could be off by 3,2600 units on average. This error would be lower if the model had less variance which could make our estimate prediction better.
-
-The second term "$R^2$" is another measure of fit statistic. It describes the model in the form of proportions of variance in data explained by the model. Here 0.612 means that 61.2% of the variance can be explained by this model.
-
-Finally, the F-statistic is a measure of the statistical significance of the model. A value of 312.1 is high enough that we can say that the results are highly statistically significant.
+Finally, the F-statistic is a measure of the statistical significance of the model. A value of `r f_statistic(reg)` is high enough that we can say that the results are highly statistically significant.
 
 ## Conclusion ##
  
-Through this paper, we learn that TV ads play a significant role in increasing poduct sales. We also learn about the approximate quantitative difference tv ads made on sales for this given data. The results are statistically significant and 61.2% of the variation can be explained by our linear model. This analysis can be helpful for anyone who is trying to understand the impact of tv ads dollars and how to allocate budgets accordingly. Finally, this is precisely why we see ads on tv. If it never increased sales then there would be no point of showing the advertisements. 
+To directly answers the questions on Page 75 on ISLR:  
+
+1. Is at least one of the predictors useful in predicting the response?  
+  Yes, TV and Radio are quite helpful predicting sales.  
+  
+2. Do all predictors help to explain the response, or is only a subset of the predictors
+useful?  
+  No, Newspaper is not significant enough to be conclusive.   
+  
+3. How well does the model fit the data?   
+  The model captures `r r_squared(reg)*100`% of the variance of the data, which is actually quite good.  
+  
+4. How accurate is the prediction?
+  The accuracy of the prediction is a function of the error term, the bias in the model and the fact that this is a prediction and not an actual value. Due to this, we look at the confidence intervals of the perdictors and the confidence intervals of the sales. This would give us a better idea about how accurate we can be on average.  
+
+
+In conclusion, through this paper, we learn that TV and Radio ads play a significant role in increasing product sales. We also learn about the approximate quantitative difference tv and radio ads made on sales for this given data. We also find that newspaper ads are actually not useful for this prediction model. Their variation for any given point is too much to be able to find a concrete answer about their effectiveness.
+We notice that the results are statistically significant and majority of the variation can be explained by our linear model. This analysis can be helpful for anyone who is trying to understand the impact of tv and radio ads dollars and how to allocate budgets accordingly. Finally, this is precisely why we see ads on tv and hear them on radio. If it never increased sales then there would be no point of paying for those advertisements. 
