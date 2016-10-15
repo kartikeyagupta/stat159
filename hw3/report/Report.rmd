@@ -1,25 +1,25 @@
 ---
-title: "Report - Homework 2 Stat 159"
+title: "Report - Homework 3 Stat 159"
 author: "Kartikeya Gupta"
-date: "October 7, 2016"
+date: "October 14, 2016"
 output: pdf_document
 ---
 ## Abstract ##
-This is Homework 2 for Stat 159 - RCDSC. For this homework, we are reproducing the main results displayed in Section 3.1, Chapter 3 of the book An Introduction to Statistical Learning.  
+This is Homework 3 for Stat 159 - RCDSC. For this homework, we are reproducing the main results displayed in Section 3.1, Chapter 3 of the book An Introduction to Statistical Learning.  
 
 ## Introduction ##
-Through this report, we try to understand the relationship between Sales and TV advertisements, and come up with a simple model that can be used to understand such a relationship. This would help us determine whether TV ads are actually successful at increasing sales or not and if yes, then what is the impact. 
+Through this report, we try to understand the relationship between Sales, TV, News and Radio advertisements, and come up with a simple model that can be used to understand such a relationship. This would help us determine whether the above mentioned media ads are actually successful at increasing sales or not and if yes, then what is their impact. 
 
 ## Data ##
-The data set we are working with is called the "Advertising"" data set. It consists of the Sales of a particular product in 200 different markets, along with advertising budgets for the product in each of those markets for three different media: TV, Radio, and Newspaper. However, for homework 2 we will be limiting ourselves to TV as our main media.   
+The data set we are working with is called the "Advertising"" data set. It consists of the Sales of a particular product in 200 different markets, along with advertising budgets for the product in each of those markets for three different media: TV, Radio, and Newspaper.
 
 Sales are in thousands of units.    
-Advertising budgets for TV is measured in thousands of dollars.  
+Advertising budgets for TV, Radio and Newspaper are measured in thousands of dollars.  
 
 ## Methodology ##
-In this paper, we will be using a Simple Single Linear Regression model which is used to find a quantitative relationship between the independent variable 'TV' and the dependent variable 'Sales'. Here the is the equation:
+In this paper, we will be using a Multiple Linear Regression model which is used to find a quantitative relationship between the independent variables TV, Newspaper, Radio and the dependent variable Sales. Here the is the equation:
 $$
-Sales = \beta_0 + \beta1 * TV
+Sales = \beta_0 + \beta1 TV + \beta2 Radio + \beta3 Newspaper + \epsilon
 $$
 Here the $\beta_0$ is the constant term and the $\beta_1$ is the coefficient of TV Ads.
 Note we fit the regression by using the Ordinary Least Squares Estimator method.
@@ -29,7 +29,9 @@ Note we fit the regression by using the Ordinary Least Squares Estimator method.
 To be able to visualize the data we create the scatterplot given below. through this scatterplot, we can see that there are various values of of Sale-vs-Tv and an upward sloping line. This line indicates a positive linear relationship between Tv ads and Sales. Further, we notice that the graph is heteroscadastic which means that the variance is changing given the slope. Initial sales have a small variance as compared to the large variance towards the right end of the graph where TV ad budget is far greater. This could signify a rather loose casuality when the budget increases alot. Note that the line going through the plot is essentailly the fitted line of the regression.
 
 \begin{center}
-\includegraphics[width=250pt]{./../images/scatterplot-tv-sales.png}
+\includegraphics[width=0.33\textwidth]{./../images/scatterplot-tv-sales.png}%
+\includegraphics[width=0.33\textwidth]{./../images/scatterplot-radio-sales.png}%
+\includegraphics[width=0.33\textwidth]{./../images/scatterplot-newspaper-sales.png}
 \end{center}
 
 Going deeper into this analysis, we focus our direction to the model and its quantitative properties. 
@@ -60,9 +62,11 @@ valuetable = data.frame(Quantity, Value)
 print(xtable(valuetable, caption = "Measure of Fit Statistics"),row.names = FALSE, comment = FALSE)
 ```
 
+
 ```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
 print(xtable(correlation, caption = "Correlation Table"),row.names = FALSE, comment = FALSE)
 ```
+
 
 The first term "Residual Standard Error" measure the lack of fit of the model. This means that on average how much would the variance be from the given estimates. Here the value of 3.26 indicates that given the tv advertising the sales could be off by 3,2600 units on average. This error would be lower if the model had less variance which could make our estimate prediction better.
 
