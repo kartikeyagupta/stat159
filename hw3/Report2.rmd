@@ -39,8 +39,6 @@ First we have the coefficients from this fitted regression given as below along 
 ```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
 library(xtable)
 load(file = "./../data/regression.RData")
-load(file = "./../data/correlation-matrix.RData")
-source(file = "./../code/functions/regression-functions.r")
 print(xtable(reg,caption = "Regression Output"), comment = FALSE)
 ```
 
@@ -54,14 +52,10 @@ Finally, to test whether this model is actually good we measure a few more varia
 
 ```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
 Quantity = c("Residual Standard Error","R2","F-Statistic")
-Value = c(residual_std_error(reg), r_squared(reg), f_statistic(reg))
+Value = c(as.numeric(sqrt(sum(as.vector(summary(reg)$residuals)^2)/(length(summary(reg)$residuals)-2))), as.numeric(summary(reg)$r.squared), as.numeric((summary(reg)$fstatistic)[1]))
 valuetable = data.frame(Quantity, Value)
 
 print(xtable(valuetable, caption = "Measure of Fit Statistics"),row.names = FALSE, comment = FALSE)
-```
-
-```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
-print(xtable(correlation, caption = "Correlation Table"),row.names = FALSE, comment = FALSE)
 ```
 
 The first term "Residual Standard Error" measure the lack of fit of the model. This means that on average how much would the variance be from the given estimates. Here the value of 3.26 indicates that given the tv advertising the sales could be off by 3,2600 units on average. This error would be lower if the model had less variance which could make our estimate prediction better.
