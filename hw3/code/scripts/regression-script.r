@@ -34,6 +34,13 @@ dev.off()
 
 save(reg, file= "./data/regression.RData")
 
+tv = lm(Sales~TV, ad)
+radio = lm(Sales~Radio, ad)
+news = lm(Sales~Newspaper, ad)
+
+save(tv, file= "./data/tvreg.RData")
+save(radio, file= "./data/radioreg.RData")
+save(news, file= "./data/newsreg.RData")
 
 #stargazer(reg, type = "text", out = "./data/Tv~Sales-Reg.txt")
 

@@ -47,11 +47,11 @@ simple = read.csv("./../data/Advertising.csv")
 ```
 
 ```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
-tv = lm(Sales~TV, simple)
+load(file = "./../data/tvreg.RData")
 print(xtable(tv,caption = "Regression of Sales on TV"), comment = FALSE)
-radio = lm(Sales~Radio, simple)
+load(file = "./../data/radioreg.RData")
 print(xtable(radio,caption = "Regression of Sales on Radio"), comment = FALSE)
-news = lm(Sales~Newspaper, simple)
+load(file = "./../data/newsreg.RData")
 print(xtable(news,caption = "Regression of Sales on Newspaper"), comment = FALSE)
 ```
 
