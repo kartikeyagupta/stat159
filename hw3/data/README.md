@@ -8,4 +8,4 @@ eda-output.txt - Summary Statistics of Tv and Sales
 
 regression.RData - An R object which contains the results of the regression.
 
- 
+correlation-matrix.RData - An R obket that contains the matrix of correlations created by the eda-script.R. Correlations are of Sales, TV, Newspaper, Radio.
