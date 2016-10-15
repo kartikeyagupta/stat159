@@ -5,7 +5,7 @@ library("xtable")
 
 ad = read.csv("./data/Advertising.csv", row.names = 1)
 
-reg = lm(Sales ~ TV + Radio + Newspaper, ad)
+reg = lm(Sales ~ TV + Radio + Newspaper, ad, y = TRUE, x= TRUE)
 summary(reg)
 
 png("./images/scatterplot-tv-sales.png")
@@ -23,7 +23,6 @@ plot(ad$Newspaper, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xla
 abline(lm(Sales~Newspaper, ad))
 dev.off()
 
-
 png("./images/residual-plot.png")
 plot(reg, which = c(1))
 dev.off()
@@ -36,16 +35,17 @@ png("./images/normal-qq-plot.png")
 plot(reg, which = c(2))
 dev.off()
 
+save(reg, file= "./data/regression.RData")
+
 
 #stargazer(reg, type = "text", out = "./data/Tv~Sales-Reg.txt")
 
-Quantity = c("Residual Standard Error","R2","F-Statistic")
-Value = c(as.numeric(sqrt(sum(as.vector(summary(reg)$residuals)^2)/(length(summary(reg)$residuals)-2))), as.numeric(summary(reg)$r.squared), as.numeric((summary(reg)$fstatistic)[1]))
-valuetable = data.frame(Quantity, Value)
+#Quantity = c("Residual Standard Error","R2","F-Statistic")
+#Value = c(as.numeric(sqrt(sum(as.vector(summary(reg)$residuals)^2)/(length(summary(reg)$residuals)-2))), as.numeric(summary(reg)$r.squared), as.numeric((summary(reg)$fstatistic)[1]))
+#valuetable = data.frame(Quantity, Value)
 
-regtable = xtable(reg)
-valuetable = xtable(valuetable)
+#regtable = xtable(reg)
+#valuetable = xtable(valuetable)
 
-save(reg, file= "./data/regression.RData")
 
 
