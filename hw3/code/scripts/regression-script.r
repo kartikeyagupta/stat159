@@ -6,7 +6,6 @@ library("xtable")
 ad = read.csv("./data/Advertising.csv", row.names = 1)
 
 reg = lm(Sales ~ TV + Radio + Newspaper, ad, y = TRUE, x= TRUE)
-summary(reg)
 
 png("./images/scatterplot-tv-sales.png")
 plot(ad$TV, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )

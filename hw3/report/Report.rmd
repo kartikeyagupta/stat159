@@ -42,7 +42,7 @@ First we have the coefficients from this fitted regression given as below along 
 library(xtable)
 load(file = "./../data/regression.RData")
 load(file = "./../data/correlation-matrix.RData")
-source(file = "./../code/functions/regression-functions.r")
+source(file = "./../code/functions/regression-functions.R")
 simple = read.csv("./../data/Advertising.csv")
 ```
 

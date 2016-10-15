@@ -1,4 +1,3 @@
-library('corrplot')
 library('lattice')
 library('ggplot2')
 
@@ -25,8 +24,6 @@ correlation
 sink() 
 
 save(correlation, file= "./data/correlation-matrix.RData")
-
-corrplot(cor(ad, use="complete.obs") , method = 'circle', main = "Correlation Matrix")
 
 png("./images/scatterplot-matrix.png")
 pairs(ad[1:4], pch = 21)
