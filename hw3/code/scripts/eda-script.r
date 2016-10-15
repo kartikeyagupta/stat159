@@ -1,10 +1,9 @@
 library('lattice')
 library('ggplot2')
 
-#args = commandArgs(trailingOnly = TRUE)
-#ad = read.csv(args[1], row.names = 1)
+args = commandArgs(trailingOnly = TRUE)
+ad = read.csv(args[1], row.names = 1)
 
-ad = read.csv("./data/Advertising.csv", row.names = 1)
 correlation = cor(ad, use="complete.obs") 
 
 sink("./data/eda-output.txt")
@@ -42,5 +41,5 @@ hist(ad$Newspaper, xlab = "Newspaper", main = "Histogram of Newspaper Ads")
 dev.off()
 
 png("./images/histogram-radio.png")
-hist(ad$Sales, xlab = "Radio", main = "Histogram of Radio Ads ")
+hist(ad$Radio, xlab = "Radio", main = "Histogram of Radio Ads ")
 dev.off()

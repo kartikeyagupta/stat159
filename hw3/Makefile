@@ -10,21 +10,23 @@ EDAtext = data/eda-output.txt
 
 .phony: all data clean cleanall
 
-all: $(EDAtext) $(REPpdf) $(REGdata) 
+all: $(EDAtext) $(REPpdf) $(REGdata)
 
 $(EDAtext): $(EDAscript) $(DATA)
 	Rscript $(EDAscript) $(DATA)
-	
-$(REPpdf): $(REPrmd) $(REGdata) $(IMAGES) $(EDAtext)
-	Rscript -e "library(rmarkdown);render('$(REPrmd)')"
 
 $(REGdata): $(REGscript) $(DATA)
 	Rscript $(REGscript) $(DATA)
 
+$(IMAGES):
+
+$(REPpdf): $(REPrmd) $(REGdata) $(EDAtext) $(IMAGES)
+	Rscript -e "library(rmarkdown);render('$(REPrmd)')"
+
 data:
 	curl http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv > $(DATA)
 
-tests:
+tests: code/functions/regression-functions.R code/tests/test-regression.R
 	Rscript code/test-that.r
 	
 clean: 

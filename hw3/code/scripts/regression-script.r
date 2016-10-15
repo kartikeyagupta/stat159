@@ -1,9 +1,7 @@
 library("xtable")
 
-#args = commandArgs(trailingOnly = TRUE)
-#ad = read.csv(args[1], row.names = 1) 
-
-ad = read.csv("./data/Advertising.csv", row.names = 1)
+args = commandArgs(trailingOnly = TRUE)
+ad = read.csv(args[1], row.names = 1) 
 
 reg = lm(Sales ~ TV + Radio + Newspaper, ad, y = TRUE, x= TRUE)
 

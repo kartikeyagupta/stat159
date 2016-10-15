@@ -1,4 +1,3 @@
-library('corrplot')
 library('lattice')
 library('ggplot2')
 library("xtable")

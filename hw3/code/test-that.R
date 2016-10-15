@@ -8,3 +8,4 @@ source("./code/functions/regression-functions.r")
 
 # run unit tests in folder 'tests/'
 test_dir("./code/tests", reporter = "Summary")
+
