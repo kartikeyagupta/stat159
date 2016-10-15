@@ -14,12 +14,12 @@ abline(lm(Sales~TV, ad))
 dev.off()
 
 png("./images/scatterplot-radio-sales.png")
-plot(ad$Radio, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "Radio", ylab = "Sales",main = "Regression of Sales on Radio with Ad Data" )
+plot(ad$Radio, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )
 abline(lm(Sales~Radio, ad))
 dev.off()
 
 png("./images/scatterplot-newspaper-sales.png")
-plot(ad$Newspaper, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "Newspaper", ylab = "Sales",main = "Regression of Sales on Newspaper with Ad Data" )
+plot(ad$Newspaper, ad$Sales, pch=16, col=rgb(255,0,0,150,maxColorValue=255), xlab = "TV", ylab = "Sales",main = "Regression of Sales on TV with Ad Data" )
 abline(lm(Sales~Newspaper, ad))
 dev.off()
 
