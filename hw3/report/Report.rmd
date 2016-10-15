@@ -43,9 +43,20 @@ library(xtable)
 load(file = "./../data/regression.RData")
 load(file = "./../data/correlation-matrix.RData")
 source(file = "./../code/functions/regression-functions.r")
-print(xtable(reg,caption = "Regression Output"), comment = FALSE)
+simple = read.csv("./../data/Advertising.csv")
 ```
 
+```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
+print(xtable(lm(Sales~TV, simple),caption = "Regression of Sales on TV"), comment = FALSE)
+
+print(xtable(lm(Sales~Radio, simple),caption = "Regression of Sales on Radio"), comment = FALSE)
+
+print(xtable(lm(Sales~Newspaper, simple),caption = "Regression of Sales on Newspaper"), comment = FALSE)
+```
+
+```{r eval=TRUE, echo=FALSE, results='asis', message=FALSE}
+print(xtable(reg,caption = "Regression Output"), comment = FALSE)
+```
 From the intercept coefficient, we can see that if there was a $0 ad budget then we would have 7.0325*1000 ~ 7032 units of sale. This represents the constant coefficient.
 
 Moving on to the TV coefficient, we can understand that for every unit increase in TV budget the Sales would be impacted by +0.0475 units. Which means that if we increase the add budget by $1000 then we would ideally see an increase in the sales by 47.5 units. This outlines the models ability to find a relationship between TV ads and actual Sales. Also, notice that the t-stat on the TV coefficient is 17.67 which indicates that this result is highly statistically significant.
