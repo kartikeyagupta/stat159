@@ -15,6 +15,7 @@ server <- function(input, output) {
 
  output$regout = renderPlot({
    plot(data[,input$reg],data$Sales)
+   abline(lm(data$Sales ~ data[,input$reg]), col = "red")
    })
 }
 
