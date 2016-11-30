@@ -20,3 +20,17 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
+
+
+MN EARN WNE MALE0 P6
+ui <- fluidPage(
+
+)
+
+server <- function(input, output) {
+  output$data <- renderTable({
+    mtcars[, c("mpg", input$variable), drop = FALSE]
+  }, rownames = TRUE)
+}
+
+shinyApp(ui, server)
